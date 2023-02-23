@@ -1,0 +1,16 @@
+<h1>Cars</h1>
+<p>Create New Car</p>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Weight</th>
+            <th>Availability</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="car" *ngFor="let car of cars" [car]="car"></tr>
+    </tbody>
+</table>
