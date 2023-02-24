@@ -16,7 +16,12 @@ export class CarService {
   getCars(): Observable<Car[]>{
     return this.http.get<Car[]>(this.getCarsUrl).pipe(catchError(this.handleError))
   }
-  
+
+  getCarById(id: number): Observable<Car>{
+    let url = `${this.getCarsUrl}/${id}`;
+    return this.http.get<Car>(url).pipe(catchError(this.handleError));
+  }
+
 
 
 
