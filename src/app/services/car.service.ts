@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Car} from "../home/car/models/car-model";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, Observable, throwError, of} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 
 
@@ -9,37 +9,24 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
   providedIn: 'root'
 })
 export class CarService {
-  private getCarsUrl = "http://localhost:8080/crudJS/car";
+  private url = "http://localhost:8080/crudJS/car";
 
   constructor(private http: HttpClient) { }
 
   getCars(): Observable<Car[]>{
-    return this.http.get<Car[]>(this.getCarsUrl).pipe(catchError(this.handleError))
+    return this.http.get<Car[]>(this.url).pipe(catchError(err=>of(err)));
   }
 
   getCarById(id: number): Observable<Car>{
-    let url = `${this.getCarsUrl}/${id}`;
-    return this.http.get<Car>(url).pipe(catchError(this.handleError));
+    let url2 = `${this.url}/${id}`;
+    return this.http.get<Car>(url2).pipe(catchError(err=>of(err)));
+  }
+
+  addCar(car: Car): Observable<void>{
+    return this.http.post<void>(this.url, car);
   }
 
 
 
 
-  private handleError(error:HttpErrorResponse):Observable<never>{
-    console.log(error);
-    let errorMessage:string;
-
-    if(error.error instanceof ErrorEvent){
-      errorMessage=`A client error ocurred -${error.error.message}`;
-    }else{
-
-      if(error.error.reason){
-        errorMessage=`${error.error.reason} - Error code ${error.status}`;
-      }else{
-        errorMessage=` An error ocurred -Error code ${error.status}`
-      }
-    }
-    return throwError(errorMessage);
-
-  }
 }

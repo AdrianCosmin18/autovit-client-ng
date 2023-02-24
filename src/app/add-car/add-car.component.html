@@ -1,0 +1,25 @@
+<h1>New Car</h1>
+<form [formGroup]="myForm">
+  <p>
+    <label for="brand">Brand</label>
+    <input name="brand" type="text" id="brand" formControlName="brand">
+  </p>
+  <p>
+    <label for="model">Model</label>
+    <input name="model" type="text" id="model" formControlName="model">
+  </p>
+  <p>
+    <label for="weight">Weight</label>
+    <input name="weight" type="text" id="weight" formControlName="weight">
+  </p>
+  <p>
+    <label for="availability">Availability</label>
+    <input name="availability" type="checkbox" id="availability" formControlName="availability">
+  </p>
+  <p>
+    <button type="submit" value="Create New Car" (click)="addCar()" [disabled]="!myForm.valid">Create New Car</button>
+  </p>
+  <p>
+    <a class="button">Cancel</a>
+  </p>
+</form>
