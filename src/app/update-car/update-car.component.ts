@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CarService} from "../services/car.service";
 import {Car} from "../home/car/models/car-model";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-update-car',
@@ -12,7 +13,7 @@ export class UpdateCarComponent implements OnInit {
   public formUpdate!: FormGroup;
   public car!: Car;
 
-  constructor(private formBuilder: FormBuilder, private service: CarService) { }
+  constructor(private formBuilder: FormBuilder, private service: CarService, private router: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.formUpdate = this.formBuilder.group({
@@ -22,7 +23,13 @@ export class UpdateCarComponent implements OnInit {
       availability: [false]
     });
 
-    //this.car
+    let id = 0;
+    this.router.params.subscribe({
+      next: url => {
+        id = +url?.['id'];
+        console.log(id);
+      }
+    });
   }
 
 }
