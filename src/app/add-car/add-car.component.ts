@@ -4,6 +4,7 @@ import {Car} from "../home/car/models/car-model";
 import {CarService} from "../services/car.service";
 import {catchError, Subscription} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-car',
@@ -15,7 +16,7 @@ export class AddCarComponent implements OnInit, OnDestroy {
   public myForm!: FormGroup;
 
   private subscription= new Subscription();
-  constructor(private service: CarService) { }
+  constructor(private service: CarService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -25,7 +26,7 @@ export class AddCarComponent implements OnInit, OnDestroy {
     this.myForm = new FormGroup({
       brand: new FormControl("", [Validators.required, Validators.minLength(2)]),
       model: new FormControl("", [Validators.required, Validators.minLength(2)]),
-      weight: new FormControl("", [Validators.required, Validators.min(800)]),
+      weight: new FormControl("", [Validators.required, Validators.min(500)]),
       availability: new FormControl(false)
     });
   }
@@ -43,8 +44,8 @@ export class AddCarComponent implements OnInit, OnDestroy {
       this.service.addCar(car as Car).subscribe({
         next: () => window.location.reload(),
         error: (err: HttpErrorResponse) =>{
-          alert(err.error.message),
-            console.log(err.error.message);
+          alert(err)
+            //console.log(err.error.message);
         }
       })
     )
@@ -52,5 +53,9 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void{
     this.subscription.unsubscribe();
+  }
+
+  goHome(){
+    this.router.navigate(['/home']);
   }
 }

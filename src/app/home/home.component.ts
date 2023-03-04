@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Car } from './car/models/car-model';
 import {Observable, Subscription, throwError} from "rxjs";
 import {CarService} from "../services/car.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ export class HomeComponent implements OnInit ,OnDestroy {
   public cars:Car[] = [];
 
   public subscription= new Subscription();
-  constructor(private service: CarService) { }
+  constructor(private service: CarService, private router: Router) { }
 
   ngOnInit(): void {
     this.getCars();
@@ -32,6 +33,8 @@ export class HomeComponent implements OnInit ,OnDestroy {
     this.subscription.unsubscribe();
   }
 
-
+  goToAddCar(){
+    this.router.navigate(['/add-car']);
+  }
 
 }

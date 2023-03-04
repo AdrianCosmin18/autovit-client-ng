@@ -8,13 +8,15 @@ import { CarComponent } from './home/car/car.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddCarComponent } from './add-car/add-car.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { UpdateCarComponent } from './update-car/update-car.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CarComponent,
-    AddCarComponent
+    AddCarComponent,
+    UpdateCarComponent
   ],
   imports: [
     BrowserModule,

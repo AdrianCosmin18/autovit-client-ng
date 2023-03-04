@@ -19,14 +19,20 @@ export class CarService {
 
   getCarById(id: number): Observable<Car>{
     let url2 = `${this.url}/${id}`;
-    return this.http.get<Car>(url2).pipe(catchError(err=>of(err)));
+    return this.http.get<Car>(url2).pipe(catchError(this.handleError));
   }
 
   addCar(car: Car): Observable<void>{
-    return this.http.post<void>(this.url, car);
+    return this.http.post<void>(this.url, car).pipe(catchError(this.handleError));
   }
 
+  private handleError(error: HttpErrorResponse): Observable<never>{
+    console.log(error);
+    let errorMessage:string;
 
+    errorMessage = error.error.message;
+    return throwError(errorMessage);
+  }
 
 
 }
