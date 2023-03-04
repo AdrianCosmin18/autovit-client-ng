@@ -5,7 +5,7 @@
     <input [ngClass]="brand?.invalid && brand?.touched ? 'is-invalid' : ''" name="brand" type="text" id="brand" formControlName="brand">
     <small class="text-danger" *ngIf="brand?.invalid && brand?.touched && brand?.errors?.['required']">Brand is required</small>
     <small class="text-danger" *ngIf=" brand?.touched && brand?.errors?.['minlength']">Brand must have minim 2 letters</small>
-    <small class="text-danger" *ngIf="brand?.touched && brand?.errors?.['pattern']">First letter must be uppercase</small>
+    <small class="text-danger" *ngIf="brand?.touched && brand?.errors?.['pattern']">First letter must be uppercase and must not contain numbers</small>
   </p>
   <p>
     <label for="model">Model</label>

@@ -15,7 +15,7 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
   public myForm!: FormGroup;
 
-  private subscription= new Subscription();
+  private subscription = new Subscription();
   constructor(private service: CarService, private router: Router) { }
 
   ngOnInit(): void {
@@ -57,10 +57,11 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.service.addCar(car as Car).subscribe({
-        next: () => window.location.reload(),
+        next: () => {
+          this.goHome();
+        },
         error: (err: HttpErrorResponse) =>{
           alert(err)
-            //console.log(err.error.message);
         }
       })
     )

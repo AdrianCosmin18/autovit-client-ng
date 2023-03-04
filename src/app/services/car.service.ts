@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Car} from "../home/car/models/car-model";
-import {catchError, Observable, throwError, of} from "rxjs";
+import {catchError, Observable, throwError, of, BehaviorSubject, tap} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 
 
@@ -11,10 +11,21 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 export class CarService {
   private url = "http://localhost:8080/crudJS/car";
 
-  constructor(private http: HttpClient) { }
+  public carsState$= new BehaviorSubject<Car[]>([]);
+
+  constructor(private http: HttpClient) {
+
+
+    this.getCars().subscribe((data)=>{
+        this.carsState$.next(data);
+      }
+    )
+  }
 
   getCars(): Observable<Car[]>{
-    return this.http.get<Car[]>(this.url).pipe(catchError(err=>of(err)));
+
+    return this.http.get<Car[]>(this.url).pipe(
+      catchError(err=>of(err)));
   }
 
   getCarById(id: number): Observable<Car>{
@@ -23,7 +34,10 @@ export class CarService {
   }
 
   addCar(car: Car): Observable<void>{
-    return this.http.post<void>(this.url, car).pipe(catchError(this.handleError));
+    let aux=car;
+    aux.id=this.generateRandomId();
+    this.carsState$.next([...this.carsState$.value,aux])
+    return  this.http.post<void>(this.url, car).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): Observable<never>{
@@ -32,6 +46,20 @@ export class CarService {
 
     errorMessage = error.error.message;
     return throwError(errorMessage);
+  }
+
+
+  private generateRandomId():number{
+
+    let id=Math.floor(Math.random()*1000);
+    while(this.carsState$.getValue().filter(e=>e.id==id).length>0){
+       id=Math.floor(Math.random()*1000);
+
+    }
+
+    return id;
+
+
   }
 
 
