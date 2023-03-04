@@ -2,15 +2,23 @@
 <form [formGroup]="myForm">
   <p>
     <label for="brand">Brand</label>
-    <input name="brand" type="text" id="brand" formControlName="brand">
+    <input [ngClass]="brand?.invalid && brand?.touched ? 'is-invalid' : ''" name="brand" type="text" id="brand" formControlName="brand">
+    <small class="text-danger" *ngIf="brand?.invalid && brand?.touched && brand?.errors?.['required']">Brand is required</small>
+    <small class="text-danger" *ngIf=" brand?.touched && brand?.errors?.['minlength']">Brand must have minim 2 letters</small>
+    <small class="text-danger" *ngIf="brand?.touched && brand?.errors?.['pattern']">First letter must be uppercase</small>
   </p>
   <p>
     <label for="model">Model</label>
     <input name="model" type="text" id="model" formControlName="model">
+    <small class="text-danger" *ngIf="model?.touched && model?.errors?.['required']">Model is required</small>
+    <small class="text-danger" *ngIf=" model?.touched && model?.errors?.['minlength']">Model must have minim 2 letters</small>
   </p>
+
   <p>
     <label for="weight">Weight</label>
     <input name="weight" type="text" id="weight" formControlName="weight">
+    <small class="text-danger" *ngIf="weight?.touched && weight?.errors?.['required']">Weight is required</small>
+    <small class="text-danger" *ngIf="weight?.touched && weight?.errors?.['min']">Weight must be minimum 500</small>
   </p>
   <p>
     <label for="availability">Availability</label>
