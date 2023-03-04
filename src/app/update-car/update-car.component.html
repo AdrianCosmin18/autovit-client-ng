@@ -1,0 +1,28 @@
+<h1>Update Car</h1>
+<form [formGroup]="formUpdate">
+  <p>
+    <label for="brand">Brand</label>
+    <input name="brand" type="text" id="brand" formControlName="brand">
+  </p>
+  <p>
+    <label for="model">Model</label>
+    <input name="model" type="text" id="model" formControlName="model">
+  </p>
+  <p>
+    <label for="weight">Weight</label>
+    <input name="weight" type="text" id="weight" formControlName="weight">
+  </p>
+  <p>
+    <label for="availability">Availability</label>
+    <input name="availability" type="checkbox" id="availability" formControlName="availability">
+  </p>
+  <p>
+    <a class="button button-to-save">Save car</a>
+  </p>
+  <p>
+    <a class="button button-to-home">Cancel</a>
+  </p>
+  <p>
+    <a class="button button-to-delete">Delete</a>
+  </p>
+</form>
