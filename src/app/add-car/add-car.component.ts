@@ -15,19 +15,34 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
   public myForm!: FormGroup;
 
-  private subscription= new Subscription();
+  private subscription = new Subscription();
   constructor(private service: CarService, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
   }
 
+  public get brand(){
+    return this.myForm.get('brand');
+  }
+
+  public get model(){
+    return this.myForm.get('model');
+  }
+
+  public get weight(){
+    return this.myForm.get('weight');
+  }
+
+
   private createForm(){
     this.myForm = new FormGroup({
-      brand: new FormControl("", [Validators.required, Validators.minLength(2)]),
-      model: new FormControl("", [Validators.required, Validators.minLength(2)]),
-      weight: new FormControl("", [Validators.required, Validators.min(500)]),
+      brand: new FormControl("", [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Z]+[a-zA-Z]*$')]),
+      model: new FormControl("", [Validators.required, Validators.minLength(2), Validators.pattern('^\\S*$')]),
+      weight: new FormControl("", [Validators.required, Validators.min(500), Validators.pattern('^\\d*[.]?\\d$')]),
       availability: new FormControl(false)
+    },{
+      updateOn: 'change'
     });
   }
 
@@ -42,10 +57,11 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.service.addCar(car as Car).subscribe({
-        next: () => window.location.reload(),
+        next: () => {
+          this.goHome();
+        },
         error: (err: HttpErrorResponse) =>{
           alert(err)
-            //console.log(err.error.message);
         }
       })
     )

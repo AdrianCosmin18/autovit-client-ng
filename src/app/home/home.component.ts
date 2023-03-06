@@ -21,9 +21,8 @@ export class HomeComponent implements OnInit ,OnDestroy {
   }
 
   getCars(){
-
     this.subscription.add(
-      this.service.getCars().subscribe({
+      this.service.carsState$.subscribe({
         next: (cars) => this.cars = cars,
         error: err => throwError(err)
     }))
