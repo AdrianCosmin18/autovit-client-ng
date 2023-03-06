@@ -1,26 +1,40 @@
 <h1>Update Car</h1>
 <form [formGroup]="formUpdate">
-  <p>
+  <div>
     <label for="brand">Brand</label>
     <input name="brand" type="text" id="brand" formControlName="brand">
-  </p>
-  <p>
+    <div class="error-div" *ngIf="brand?.invalid && brand?.dirty">
+      <small class="text-danger" *ngIf="brand?.errors?.['required']">Brand is required</small>
+      <small class="text-danger" *ngIf="brand?.errors?.['minlength']">Brand must have minim 2 letters</small>
+      <small class="text-danger" *ngIf="brand?.errors?.['pattern']">First letter must be uppercase <br> Must not contain numbers and spaces</small>    </div>
+  </div>
+  <div>
     <label for="model">Model</label>
     <input name="model" type="text" id="model" formControlName="model">
-  </p>
-  <p>
+    <div class="error-div" *ngIf="model?.invalid && model?.dirty">
+      <small class="text-danger" *ngIf="model?.errors?.['required']">Model is required</small>
+      <small class="text-danger" *ngIf="model?.errors?.['minlength']">Model must have minim 2 letters</small>
+      <small class="text-danger" *ngIf="model?.errors?.['pattern']">Model must not contain spaces</small>
+    </div>
+  </div>
+  <div>
     <label for="weight">Weight</label>
     <input name="weight" type="text" id="weight" formControlName="weight">
-  </p>
+    <div class="error-div" *ngIf="weight?.invalid && weight?.dirty">
+      <small class="text-danger" *ngIf="weight?.errors?.['required']">Weight is required</small>
+      <small class="text-danger" *ngIf="weight?.errors?.['min']">Weight must be minimum 500</small>
+      <small class="text-danger" *ngIf="weight?.errors?.['pattern']">Weight must be numeric</small>
+    </div>
+  </div>
   <p>
     <label for="availability">Availability</label>
-    <input name="availability" type="checkbox" id="availability" formControlName="availability">
+    <input name="availability" type="checkbox" id="availability" formControlName="isAvailable">
   </p>
   <p>
-    <a class="button button-to-save">Save car</a>
+    <a class="button button-to-save" (click)="updateCar()">Save car</a>
   </p>
   <p>
-    <a class="button button-to-home">Cancel</a>
+    <a class="button button-to-home" routerLink="/home">Cancel</a>
   </p>
   <p>
     <a class="button button-to-delete">Delete</a>

@@ -15,7 +15,6 @@ export class CarService {
 
   constructor(private http: HttpClient) {
 
-
     this.getCars().subscribe((data)=>{
         this.carsState$.next(data);
       }
@@ -40,6 +39,27 @@ export class CarService {
     return  this.http.post<void>(this.url, car).pipe(catchError(this.handleError));
   }
 
+  getCarByBrandAndModel(brand: string, model: string): Observable<Car>{
+    let url2 = `${this.url}/get-car-by-brand-model`;
+    url2 += `?brand=${brand}&model=${model}`;
+    return this.http.get<Car>(url2).pipe(catchError(this.handleError));
+  }
+
+  updateCar(id: number, car: Car): Observable<void>{
+    let url2 = `${this.url}/${id}`;
+    return this.http.put<void>(url2, car).pipe(catchError(this.handleError));
+  }
+
+  updateCarByBrandAndModel(brand: string, model: string, car: Car): Observable<void>{
+    let aux = car;
+    aux.id = this.generateRandomId();
+    this.carsState$.next([...this.carsState$.value.filter(e=>e.brand != brand).filter(e => e.model != model), aux]);
+
+    let url2 = `${this.url}/update-car-by-brand-model`;
+    url2 += `?brand=${brand}&model=${model}`;
+    return this.http.put<void>(url2, car).pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never>{
     console.log(error);
     let errorMessage:string;
@@ -54,13 +74,11 @@ export class CarService {
     let id=Math.floor(Math.random()*1000);
     while(this.carsState$.getValue().filter(e=>e.id==id).length>0){
        id=Math.floor(Math.random()*1000);
-
     }
-
     return id;
-
-
   }
+
+
 
 
 }
