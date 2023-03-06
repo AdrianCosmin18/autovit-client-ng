@@ -38,8 +38,8 @@ export class AddCarComponent implements OnInit, OnDestroy {
   private createForm(){
     this.myForm = new FormGroup({
       brand: new FormControl("", [Validators.required, Validators.minLength(2), Validators.pattern('^[A-Z]+[a-zA-Z]*$')]),
-      model: new FormControl("", [Validators.required, Validators.minLength(2)]),
-      weight: new FormControl("", [Validators.required, Validators.min(500)]),
+      model: new FormControl("", [Validators.required, Validators.minLength(2), Validators.pattern('^\\S*$')]),
+      weight: new FormControl("", [Validators.required, Validators.min(500), Validators.pattern('^\\d*[.]?\\d$')]),
       availability: new FormControl(false)
     },{
       updateOn: 'change'
