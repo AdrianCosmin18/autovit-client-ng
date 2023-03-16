@@ -19,7 +19,7 @@ export class CarService {
     this.getCars().subscribe((data)=>{
         this.carsState$.next(data);
       }
-    )
+    );
   }
 
   getCars(): Observable<Car[]>{
@@ -54,12 +54,8 @@ export class CarService {
     let id=Math.floor(Math.random()*1000);
     while(this.carsState$.getValue().filter(e=>e.id==id).length>0){
        id=Math.floor(Math.random()*1000);
-
     }
-
     return id;
-
-
   }
 
 

@@ -9,6 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AddCarComponent } from './add-car/add-car.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { UpdateCarComponent } from './update-car/update-car.component';
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {environment} from "../environments/environment";
+import {StoreRouterConnectingModule} from "@ngrx/router-store";
+import {StoreModule} from "@ngrx/store";
+import * as fromApp from "./store/app.reducer"
+
 
 @NgModule({
   declarations: [
@@ -23,7 +29,10 @@ import { UpdateCarComponent } from './update-car/update-car.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+    StoreRouterConnectingModule.forRoot(),
+    StoreModule.forRoot(fromApp.appReducer),
   ],
   providers: [],
   bootstrap: [AppComponent]

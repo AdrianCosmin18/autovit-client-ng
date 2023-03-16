@@ -3,7 +3,12 @@ import { Car } from './car/models/car-model';
 import {Observable, Subscription, throwError} from "rxjs";
 import {CarService} from "../services/car.service";
 import {Router} from "@angular/router";
+import {CarNgRxService} from "../servicesNgRx/car-ng-rx.service";
+import {HttpErrorResponse} from "@angular/common/http";
 
+import * as fromApp from '../store/app.reducer';
+import * as CarActions from  '../home/car/store/cars.action';
+import {Store} from "@ngrx/store";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,18 +19,29 @@ export class HomeComponent implements OnInit ,OnDestroy {
   public cars:Car[] = [];
 
   public subscription= new Subscription();
-  constructor(private service: CarService, private router: Router) { }
+  constructor(private  store:Store<fromApp.AppState>, private router: Router, private serviceNgRx: CarNgRxService) { }
 
   ngOnInit(): void {
     this.getCars();
+
+    this.store.select("cars").subscribe(data=>{
+      console.log(data);
+    })
   }
 
   getCars(){
     this.subscription.add(
-      this.service.carsState$.subscribe({
-        next: (cars) => this.cars = cars,
-        error: err => throwError(err)
-    }))
+      this.serviceNgRx.getCars().subscribe({
+        next: (cars) => {
+          this.cars = cars;
+
+          this.store.dispatch(new CarActions.SetCars(cars))
+        },
+        error: (err: HttpErrorResponse) =>{
+          alert(err);
+        }
+      })
+    )
   }
 
   ngOnDestroy(): void {
