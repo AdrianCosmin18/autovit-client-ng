@@ -13,4 +13,10 @@
     <tbody>
         <tr class="car" *ngFor="let car of cars" [car]="car"></tr>
     </tbody>
+
+  <button type="button"
+          class="btn btn-primary"
+          (click)="onClick()"
+          style="margin-top: 20px;"
+  >Show</button>
 </table>

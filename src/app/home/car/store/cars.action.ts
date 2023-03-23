@@ -10,8 +10,6 @@ export class SetCars implements Action{
   readonly type = SET_CARS;
 
   constructor(public payload: Car[]) {
-
-
   }
 }
 

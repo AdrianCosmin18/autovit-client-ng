@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Car } from './car/models/car-model';
 import {Observable, Subscription, throwError} from "rxjs";
-import {CarService} from "../services/car.service";
 import {Router} from "@angular/router";
 import {CarNgRxService} from "../servicesNgRx/car-ng-rx.service";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -19,13 +18,16 @@ export class HomeComponent implements OnInit ,OnDestroy {
   public cars:Car[] = [];
 
   public subscription= new Subscription();
-  constructor(private  store:Store<fromApp.AppState>, private router: Router, private serviceNgRx: CarNgRxService) { }
+  constructor(private store:Store<fromApp.AppState>,
+              private router: Router,
+              private serviceNgRx: CarNgRxService
+  ) { }
 
   ngOnInit(): void {
-    this.getCars();
+    // this.getCars();
 
     this.store.select("cars").subscribe(data=>{
-      console.log(data);
+      this.cars = data.carslist;
     })
   }
 
@@ -33,7 +35,6 @@ export class HomeComponent implements OnInit ,OnDestroy {
     this.subscription.add(
       this.serviceNgRx.getCars().subscribe({
         next: (cars) => {
-          this.cars = cars;
 
           this.store.dispatch(new CarActions.SetCars(cars))
         },
@@ -52,4 +53,9 @@ export class HomeComponent implements OnInit ,OnDestroy {
     this.router.navigate(['/add-car']);
   }
 
+
+  onClick(){
+    console.log("TEST");
+    this.getCars();
+  }
 }

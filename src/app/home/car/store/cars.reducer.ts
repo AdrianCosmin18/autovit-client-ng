@@ -1,6 +1,4 @@
 import {Car} from "../models/car-model";
-import {CarListAction} from "./cars.action";
-import {Action} from 'rxjs/internal/scheduler/Action';
 import * as Actions from './cars.action';
 
 

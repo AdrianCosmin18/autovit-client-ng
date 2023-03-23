@@ -30,9 +30,9 @@ import * as fromApp from "./store/app.reducer"
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
-    StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
+    StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+    StoreRouterConnectingModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
