@@ -5,6 +5,7 @@ import {CarService} from "../services/car.service";
 import {catchError, Subscription} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Route, Router} from "@angular/router";
+import {CarNgRxService} from "../servicesNgRx/car-ng-rx.service";
 
 @Component({
   selector: 'app-add-car',
@@ -16,7 +17,10 @@ export class AddCarComponent implements OnInit, OnDestroy {
   public myForm!: FormGroup;
 
   private subscription = new Subscription();
-  constructor(private service: CarService, private router: Router) { }
+
+  constructor(private service: CarService,
+              private router: Router,
+              private serviceNgRx: CarNgRxService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -56,7 +60,7 @@ export class AddCarComponent implements OnInit, OnDestroy {
     }
 
     this.subscription.add(
-      this.service.addCar(car as Car).subscribe({
+      this.serviceNgRx.addCar(car as Car).subscribe({
         next: () => {
           this.goHome();
         },

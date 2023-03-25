@@ -13,4 +13,18 @@ export class SetCars implements Action{
   }
 }
 
-export type CarListAction = SetCars;
+export class AddCar implements Action{
+  readonly type = ADD_CAR;
+
+  constructor(public payload: Car) {
+  }
+}
+
+export class UpdateCar implements Action{
+  readonly type = UPDATE_CAR;
+
+  constructor(public payload: Car, public oldBrand: string, public oldModel: string) {
+  }
+}
+
+export type CarListAction = SetCars | AddCar | UpdateCar;

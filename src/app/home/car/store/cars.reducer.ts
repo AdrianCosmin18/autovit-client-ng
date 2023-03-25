@@ -18,8 +18,28 @@ export function carsReducer(
     case Actions.SET_CARS:
       return{
         ...state,
-        carslist: action.payload
+        carslist: action.payload,
+        cosmin:"test",
+
       };
+
+    case Actions.ADD_CAR:
+
+
+
+      return{
+        ...state,
+        carslist: [...state.carslist, action.payload],
+        cosmin: "test2"
+      }
+
+    case Actions.UPDATE_CAR:
+
+      return {
+        ...state,
+        carslist: [...state.carslist.filter(e => e.brand != action.oldBrand && e.model != action.oldModel), action.payload]
+      }
+
     default:
       return state;
   }

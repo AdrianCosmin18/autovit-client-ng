@@ -24,8 +24,6 @@ export class HomeComponent implements OnInit ,OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // this.getCars();
-
     this.store.select("cars").subscribe(data=>{
       this.cars = data.carslist;
     })

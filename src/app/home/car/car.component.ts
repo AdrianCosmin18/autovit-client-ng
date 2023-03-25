@@ -20,4 +20,7 @@ export class CarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  putUrl(): string{
+    return `${this.car.brand}/${this.car.model}`;
+  }
 }
