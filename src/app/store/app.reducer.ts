@@ -10,7 +10,7 @@ export interface AppState{
 export const appReducer:ActionReducerMap<AppState>={
 
   //@ts-ignore
-  cars:fromCars.carsReducer,
+  cars: fromCars.carsReducer,
 
 }
 

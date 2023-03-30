@@ -13,8 +13,8 @@
     <input name="weight" type="text" id="weight" formControlName="weight">
   </p>
   <p>
-    <label for="availability">Availability</label>
-    <input name="availability" type="checkbox" id="availability" formControlName="availability">
+    <label for="isAvailable">Availability</label>
+    <input name="isAvailable" type="checkbox" id="isAvailable" formControlName="isAvailable">
   </p>
   <p>
     <a class="button button-to-save" (click)="saveCar()">Save car</a>
@@ -23,6 +23,6 @@
     <a class="button button-to-home" (click)="cancel()">Cancel</a>
   </p>
   <p>
-    <a class="button button-to-delete">Delete</a>
+    <a class="button button-to-delete" (click)="deleteCar()">Delete</a>
   </p>
 </form>

@@ -31,12 +31,21 @@ export class CarNgRxService {
   }
 
   updateCar(car: Car, oldBrand: string, oldModel: string): Observable<void>{
-
-    this.store.dispatch(new CarActions.UpdateCar(car, oldBrand, oldModel));
+    let aux = car;
+    aux.id = this.generateRandomId();
+    this.store.dispatch(new CarActions.UpdateCar(aux, oldBrand, oldModel));
 
     let path = `${this.url}/update-car-by-brand-model?brand=${oldBrand}&model=${oldModel}`;
 
     return this.http.put<void>(path, car)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteCar(brand: string, model: string): Observable<void>{
+    this.store.dispatch(new CarActions.DeleteCar(brand, model));
+    let path = `${this.url}/delete-car/${brand}/${model}`;
+
+    return this.http.delete<void>(path)
       .pipe(catchError(this.handleError));
   }
 

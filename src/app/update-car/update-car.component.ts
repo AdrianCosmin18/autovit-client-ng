@@ -33,11 +33,10 @@ export class UpdateCarComponent implements OnInit {
       brand: ["", [Validators.required, Validators.minLength(2)]],
       model: ["", [Validators.required, Validators.minLength(2)]],
       weight: ["", [Validators.required, Validators.min(500)]],
-      availability: [false]
+      isAvailable: [false]
     });
 
     this.putCarInForm();
-
     this.completeForm();
   }
 
@@ -59,7 +58,6 @@ export class UpdateCarComponent implements OnInit {
         console.log(cars);
         this.car = cars[0];
       })
-
       }
     });
   }
@@ -69,18 +67,32 @@ export class UpdateCarComponent implements OnInit {
       brand: this.car.brand,
       model: this.car.model,
       weight: this.car.weight,
-      availability: this.car.isAvailable
+      isAvailable: this.car.isAvailable
     })
   }
 
   saveCar(){
-    this.ngRxService.updateCar(this.car, this.brand, this.model).subscribe({
+    let car: Car = this.formUpdate.value;
+    console.log(car);
+
+    this.ngRxService.updateCar(car, this.brand, this.model).subscribe({
       next: () => {
         this.goHome();
       },
       error: (err: HttpErrorResponse) =>{
         alert(err)
       }
+    })
+  }
+
+
+  deleteCar(){
+    let deleteBrand = this.formUpdate.get("brand")?.value;
+    let deleteModel = this.formUpdate.get("model")?.value;
+
+    this.ngRxService.deleteCar(deleteBrand, deleteModel).subscribe({
+      next: () => this.goHome(),
+      error: err => alert(err)
     })
   }
 

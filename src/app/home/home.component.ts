@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit ,OnDestroy {
       this.serviceNgRx.getCars().subscribe({
         next: (cars) => {
 
-          this.store.dispatch(new CarActions.SetCars(cars))
+          this.store.dispatch(new CarActions.SetCars(cars));
         },
         error: (err: HttpErrorResponse) =>{
           alert(err);

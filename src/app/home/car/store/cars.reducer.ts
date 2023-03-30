@@ -25,8 +25,6 @@ export function carsReducer(
 
     case Actions.ADD_CAR:
 
-
-
       return{
         ...state,
         carslist: [...state.carslist, action.payload],
@@ -38,6 +36,13 @@ export function carsReducer(
       return {
         ...state,
         carslist: [...state.carslist.filter(e => e.brand != action.oldBrand && e.model != action.oldModel), action.payload]
+      }
+
+    case Actions.DELETE_CAR:
+      return {
+        ...state,
+        carslist: [...state.carslist.filter(e => e.brand != action.brand && e.model != action.model)],
+        cosmin: "delete car"
       }
 
     default:
