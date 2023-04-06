@@ -8,6 +8,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import * as fromApp from '../store/app.reducer';
 import * as CarActions from  '../home/car/store/cars.action';
 import {Store} from "@ngrx/store";
+import {Action} from "rxjs/internal/scheduler/Action";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -26,7 +27,8 @@ export class HomeComponent implements OnInit ,OnDestroy {
   ngOnInit(): void {
     this.store.select("cars").subscribe(data=>{
       this.cars = data.carslist;
-    })
+    });
+    // this.store.dispatch(new CarActions.SetCars(this.cars));
   }
 
   getCars(){
@@ -53,7 +55,9 @@ export class HomeComponent implements OnInit ,OnDestroy {
 
 
   onClick(){
-    console.log("TEST");
-    this.getCars();
+
+    // this.getCars();
+    this.store.dispatch(new CarActions.SetCars(this.cars));
+    //la click se activeaza SetCars => se creaza efectul de a lua masinile din bd
   }
 }

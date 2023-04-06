@@ -6,6 +6,9 @@ import {catchError, Subscription} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Route, Router} from "@angular/router";
 import {CarNgRxService} from "../servicesNgRx/car-ng-rx.service";
+import {Store} from "@ngrx/store";
+import * as fromApp from "../store/app.reducer";
+import * as  CarAction from "../home/car/store/cars.action";
 
 @Component({
   selector: 'app-add-car',
@@ -20,7 +23,8 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
   constructor(private service: CarService,
               private router: Router,
-              private serviceNgRx: CarNgRxService) { }
+              private serviceNgRx: CarNgRxService,
+              private store:Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -59,16 +63,19 @@ export class AddCarComponent implements OnInit, OnDestroy {
       isAvailable: this.myForm?.get("availability")?.value
     }
 
-    this.subscription.add(
-      this.serviceNgRx.addCar(car as Car).subscribe({
-        next: () => {
-          this.goHome();
-        },
-        error: (err: HttpErrorResponse) =>{
-          alert(err)
-        }
-      })
-    )
+    // this.subscription.add(
+    //   this.serviceNgRx.addCar(car as Car).subscribe({
+    //     next: () => {
+    //       this.goHome();
+    //     },
+    //     error: (err: HttpErrorResponse) =>{
+    //       alert(err)
+    //     }
+    //   })
+    // );
+
+
+    //this.store.dispatch(new CarAction(car)); // aici trebuie rezolvat
   }
 
   ngOnDestroy(): void{

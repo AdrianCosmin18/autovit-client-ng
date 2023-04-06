@@ -14,6 +14,8 @@ import {environment} from "../environments/environment";
 import {StoreRouterConnectingModule} from "@ngrx/router-store";
 import {StoreModule} from "@ngrx/store";
 import * as fromApp from "./store/app.reducer"
+import {EffectsModule} from "@ngrx/effects";
+import {CarsEffects} from "./home/car/store/cars.effects";
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import * as fromApp from "./store/app.reducer"
     FormsModule,
     StoreModule.forRoot(fromApp.appReducer),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot(),
+    EffectsModule.forRoot(([CarsEffects]))
   ],
   providers: [],
   bootstrap: [AppComponent]

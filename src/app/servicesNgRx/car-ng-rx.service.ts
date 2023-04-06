@@ -22,9 +22,9 @@ export class CarNgRxService {
   }
 
   addCar(car: Car): Observable<void>{
-    let aux = car;
-    aux.id = this.generateRandomId();
-    this.store.dispatch(new CarActions.AddCar(aux));
+    // let aux = car;
+    // aux.id = this.generateRandomId();
+    // this.store.dispatch(new CarActions.AddCar(aux));
 
     return this.http.post<void>(this.url, car)
       .pipe(catchError(this.handleError));
