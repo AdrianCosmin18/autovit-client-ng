@@ -21,12 +21,12 @@ export class CarNgRxService {
       .pipe(catchError(err => of(err)));
   }
 
-  addCar(car: Car): Observable<void>{
+  addCar(car: Car): Observable<Car>{
     // let aux = car;
     // aux.id = this.generateRandomId();
     // this.store.dispatch(new CarActions.AddCar(aux));
 
-    return this.http.post<void>(this.url, car)
+    return this.http.post<Car>(this.url, car)
       .pipe(catchError(this.handleError));
   }
 

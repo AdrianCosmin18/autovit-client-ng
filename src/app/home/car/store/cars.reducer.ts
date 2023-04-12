@@ -23,7 +23,7 @@ export function carsReducer(
 
       };
 
-    case Actions.ADD_CAR:
+    case Actions.ADD_CAR_SUCCESS:
 
       return{
         ...state,

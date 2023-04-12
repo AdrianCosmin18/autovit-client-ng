@@ -8,7 +8,7 @@ import {Route, Router} from "@angular/router";
 import {CarNgRxService} from "../servicesNgRx/car-ng-rx.service";
 import {Store} from "@ngrx/store";
 import * as fromApp from "../store/app.reducer";
-import * as  CarAction from "../home/car/store/cars.action";
+import * as  CarActions from "../home/car/store/cars.action";
 
 @Component({
   selector: 'app-add-car',
@@ -21,8 +21,7 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private service: CarService,
-              private router: Router,
+  constructor(private router: Router,
               private serviceNgRx: CarNgRxService,
               private store:Store<fromApp.AppState>) { }
 
@@ -75,7 +74,9 @@ export class AddCarComponent implements OnInit, OnDestroy {
     // );
 
 
-    //this.store.dispatch(new CarAction(car)); // aici trebuie rezolvat
+    this.store.dispatch(new CarActions.AddCar(car as Car)); // aici trebuie rezolvat
+    this.goHome();
+
   }
 
   ngOnDestroy(): void{

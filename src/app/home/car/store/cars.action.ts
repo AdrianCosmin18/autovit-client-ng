@@ -3,6 +3,7 @@ import {Car} from "../models/car-model";
 
 export const SET_CARS = 'Set Cars';
 export const ADD_CAR = 'ADD CAR';
+export const ADD_CAR_SUCCESS = 'ADD CAR SUCCESS';
 export const UPDATE_CAR = 'UPDATE CAR';
 export const DELETE_CAR = 'DELETE BOOK';
 
@@ -15,6 +16,13 @@ export class SetCars implements Action{
 
 export class AddCar implements Action{
   readonly type = ADD_CAR;
+
+  constructor(public payload: Car) {
+  }
+}
+
+export class AddCarSuccess implements Action{
+  readonly type = ADD_CAR_SUCCESS
 
   constructor(public payload: Car) {
   }
@@ -34,4 +42,4 @@ export class DeleteCar implements Action{
   }
 }
 
-export type CarListAction = SetCars | AddCar | UpdateCar | DeleteCar;
+export type CarListAction = SetCars | AddCar | UpdateCar | DeleteCar | AddCarSuccess;
