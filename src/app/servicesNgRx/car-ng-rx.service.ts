@@ -30,21 +30,35 @@ export class CarNgRxService {
       .pipe(catchError(this.handleError));
   }
 
-  updateCar(car: Car, oldBrand: string, oldModel: string): Observable<void>{
-    let aux = car;
-    aux.id = this.generateRandomId();
-    this.store.dispatch(new CarActions.UpdateCar(aux, oldBrand, oldModel));
+  updateCar(car: Car, oldBrand: string, oldModel: string): Observable<Car>{
+
+    //  comentam pentru a putea folosi cu effects, nu cu redux simplu
+    // let aux = car;
+    // aux.id = this.generateRandomId();
+    // this.store.dispatch(new CarActions.UpdateCar(aux, oldBrand, oldModel));
 
     let path = `${this.url}/update-car-by-brand-model?brand=${oldBrand}&model=${oldModel}`;
 
-    return this.http.put<void>(path, car)
+    return this.http.put<Car>(path, car)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateCarById(car: Car): Observable<Car>{
+    let path = `${this.url}/${car.id}`;
+    return this.http.put<Car>(path, car)
       .pipe(catchError(this.handleError));
   }
 
   deleteCar(brand: string, model: string): Observable<void>{
-    this.store.dispatch(new CarActions.DeleteCar(brand, model));
+    //this.store.dispatch(new CarActions.DeleteCar(brand, model));
     let path = `${this.url}/delete-car/${brand}/${model}`;
 
+    return this.http.delete<void>(path)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteCarById(id: number): Observable<void>{
+    let path = `${this.url}/${id}`;
     return this.http.delete<void>(path)
       .pipe(catchError(this.handleError));
   }

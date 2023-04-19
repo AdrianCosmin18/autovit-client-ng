@@ -11,6 +11,10 @@ const handleAddCAR=(car:Car)=>{
   return new CarAction.AddCarSuccess(car);
 }
 
+const handleUpdateCar = (data:Car) => {
+  return new CarAction.UpdateCarSuccess(data);
+}
+
 
 @Injectable()
 export class CarsEffects{
@@ -43,7 +47,7 @@ export class CarsEffects{
       switchMap((carData: CarAction.AddCar) => this.carService.addCar(carData.payload).pipe(
         tap(()=>console.log("effect add car")),
         map(data=>{
-          return handleAddCAR(data)
+          return new CarAction.AddCarSuccess(data);
         }),
         catchError(err => {
           console.log(err);
@@ -51,7 +55,41 @@ export class CarsEffects{
         })
       ))
     )
-  })
+  });
+
+  updateCar$ = createEffect(() => {
+    return this.action.pipe(
+      ofType(CarAction.UPDATE_CAR),
+      take(1),
+      switchMap((carData: CarAction.UpdateCar) => this.carService.updateCar(carData.payload, carData.oldBrand, carData.oldModel).pipe(
+        tap(() => console.log("effect update car")),
+        map( (data) => {
+          return new CarAction.UpdateCarSuccess(data);
+        }),
+        catchError(err => {
+          console.log(err);
+          return EMPTY;
+        })
+      ))
+    )
+  });
+
+  deleteCar$ = createEffect(() => {
+    return this.action.pipe(
+      ofType(CarAction.DELETE_CAR),
+      take(1),
+      switchMap((carData: CarAction.DeleteCar) => this.carService.deleteCar(carData.brand, carData.model).pipe(
+        tap(() => console.log("effect delete car")),
+        map((data) => {
+          return new CarAction.DeleteCarSuccess();
+        }),
+        catchError(err => {
+          console.log(err);
+          return EMPTY;
+        })
+      ))
+    )
+  });
 
 
 

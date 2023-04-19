@@ -76,7 +76,6 @@ export class AddCarComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(new CarActions.AddCar(car as Car)); // aici trebuie rezolvat
     this.goHome();
-
   }
 
   ngOnDestroy(): void{

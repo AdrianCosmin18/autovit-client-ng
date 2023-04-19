@@ -31,11 +31,11 @@ export function carsReducer(
         cosmin: "test2"
       }
 
-    case Actions.UPDATE_CAR:
 
+    case Actions.UPDATE_CAR_SUCCESS:
       return {
         ...state,
-        carslist: [...state.carslist.filter(e => e.brand != action.oldBrand && e.model != action.oldModel), action.payload]
+        carslist: [...state.carslist.filter(e => e.id != action.payload.id), action.payload]
       }
 
     case Actions.DELETE_CAR:
